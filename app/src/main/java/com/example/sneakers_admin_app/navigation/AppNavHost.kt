@@ -1,0 +1,22 @@
+package com.example.sneakers_admin_app.navigation
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.sneakers_admin_app.navigation.graphs.authGraph
+
+@Composable
+fun AppNavHost(paddingValues: PaddingValues) {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = Routes.WELCOME,
+        modifier = Modifier.padding(paddingValues)
+    ) {
+        authGraph(navController)
+    }
+}

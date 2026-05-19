@@ -12,6 +12,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.sneakers_admin_app.navigation.AppNavHost
 import com.example.sneakers_admin_app.ui.theme.Products_AdminTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,16 +24,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             Products_AdminTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SneakersAdminApp(padding = innerPadding)
+                    AppNavHost(paddingValues = innerPadding)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun SneakersAdminApp(modifier: Modifier = Modifier, padding: PaddingValues) {
-    Column(modifier = modifier.padding(padding)) {
-        Text("Hello World!")
     }
 }
