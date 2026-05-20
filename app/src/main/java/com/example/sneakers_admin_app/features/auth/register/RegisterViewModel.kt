@@ -1,4 +1,4 @@
-package com.example.sneakers_admin_app.features.auth.presentation.viewmodel
+package com.example.sneakers_admin_app.features.auth.register
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

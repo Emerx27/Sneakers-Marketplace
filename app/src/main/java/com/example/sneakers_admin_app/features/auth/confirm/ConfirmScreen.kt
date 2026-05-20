@@ -1,4 +1,4 @@
-package com.example.sneakers_admin_app.features.auth.presentation.screens
+package com.example.sneakers_admin_app.features.auth.confirm
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

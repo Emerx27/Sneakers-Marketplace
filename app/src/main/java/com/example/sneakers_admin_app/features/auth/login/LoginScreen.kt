@@ -1,4 +1,4 @@
-package com.example.sneakers_admin_app.features.auth.presentation.screens
+package com.example.sneakers_admin_app.features.auth.login
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
