@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,17 +44,36 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 value = viewModel.email,
                 onValueChange = { viewModel.onEmailChange(it) },
-                placeholder = { Text("Email", color = AppColors.TextMuted) }
+                placeholder = { Text("Email", color = AppColors.TextMuted) },
+                isError = viewModel.emailError != null,
+                supportingText = viewModel.emailError?.let { error ->
+                    {
+                        Text(error, color = MaterialTheme.colorScheme.error)
+                    }
+                }
             )
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = viewModel.password,
-                onValueChange = { viewModel.onPasswordChange(it) },
-                placeholder = { Text("Password", color = AppColors.TextMuted) }
+                onValueChange = viewModel::onPasswordChange,
+                placeholder = { Text("Password", color = AppColors.TextMuted) },
+                isError = viewModel.passwordError != null,
+                supportingText = viewModel.passwordError?.let { error ->
+                    {
+                        Text(error, color = MaterialTheme.colorScheme.error)
+                    }
+                }
             )
 
-            PrimaryButton(modifier = Modifier.fillMaxWidth(), text = "Log in", onClick = {})
+            PrimaryButton(modifier = Modifier.fillMaxWidth(), text = "Log in", onClick = {viewModel.login()})
+
+            viewModel.generalError?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
 
             Text(modifier = Modifier.clickable {
                 navController.navigate(Routes.REGISTER) {
