@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.sneakers_admin_app.navigation.Routes
+import com.example.sneakers_admin_app.core.navigation.Routes
 import com.example.sneakers_admin_app.shared.components.PrimaryButton
 
 @Composable
@@ -26,8 +26,8 @@ fun WelcomeScreen(navController: NavController) {
     ) {
         Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceAround) {
             Column {
-                Text("Join Hypestock", fontSize = 28.sp, fontWeight = FontWeight.Bold)
-                Text("The largest sneaker market")
+                Text("Join HypeStock", fontSize = 28.sp, fontWeight = FontWeight.Bold)
+                Text("The largest sneakers market")
             }
 
             PrimaryButton(modifier = Modifier.fillMaxWidth(), text = "Get started", onClick = {navController.navigate(Routes.REGISTER) {launchSingleTop = true} })

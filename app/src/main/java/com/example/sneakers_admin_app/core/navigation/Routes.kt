@@ -1,8 +1,12 @@
-package com.example.sneakers_admin_app.navigation
+package com.example.sneakers_admin_app.core.navigation
 
 object Routes {
     const val WELCOME = "welcome"
     const val CONFIRM = "confirm"
     const val REGISTER = "register"
     const val LOGIN = "login"
+
+    const val SPLASH = "splash"
+
+    const val SNEAKERS = "sneakers"
 }
