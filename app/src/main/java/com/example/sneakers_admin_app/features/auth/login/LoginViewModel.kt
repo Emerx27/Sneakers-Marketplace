@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val tokenManager =
         UserPreferences(application)
-
     var email by mutableStateOf("")
         private set
     var password by mutableStateOf("")
@@ -51,9 +50,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     fun login() {
         viewModelScope.launch {
-            try {
-                clearErrors()
 
+            isSuccess = false
+            clearErrors()
+
+            try {
                 val response = RetrofitProvider
                         .authApi
                         .login(
@@ -67,8 +68,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     val body = response.body()
 
                     if(body != null) {
-
-                        tokenManager.saveToken(body.token)
+                        tokenManager.saveSession(token = body.token, user = body.user)
 
                         isSuccess = true
                     }
