@@ -29,4 +29,10 @@ class UserPreferences(
         val preferences = context.dataStore.data.first()
         return preferences[TOKEN]
     }
+
+    suspend fun clearToken() {
+        context.dataStore.edit {
+            it.remove(TOKEN)
+        }
+    }
 }

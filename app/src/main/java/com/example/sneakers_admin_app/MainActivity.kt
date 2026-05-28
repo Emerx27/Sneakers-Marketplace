@@ -9,11 +9,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.sneakers_admin_app.core.navigation.AppNavHost
+import com.example.sneakers_admin_app.core.network.RetrofitProvider
 import com.example.sneakers_admin_app.ui.theme.Products_AdminTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        RetrofitProvider.init(this)
         enableEdgeToEdge()
         setContent {
             Products_AdminTheme {
