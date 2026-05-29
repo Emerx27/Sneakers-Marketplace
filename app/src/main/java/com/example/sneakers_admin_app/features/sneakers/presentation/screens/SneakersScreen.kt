@@ -1,22 +1,173 @@
 package com.example.sneakers_admin_app.features.sneakers.presentation.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel.SneakersViewModel
+import com.example.sneakers_admin_app.ui.theme.AppColors
 
 @Composable
 fun SneakersScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: SneakersViewModel = viewModel()
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
+
+    val sneakers by viewModel.sneakerPreviewList.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getAllSneakers()
+    }
+
+    viewModel.errorMessage?.let {
+        Box(
+            Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                color = MaterialTheme.colorScheme.error,
+                text = viewModel.errorMessage!!
+            )
+        }
+        return
+    }
+
+    if (viewModel.isLoading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(
+                trackColor = MaterialTheme.colorScheme.background,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+        return
+    }
+
+    Column(
+        modifier = Modifier.padding(horizontal = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
-        Text("Sneakers List")
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+        ) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = "Marketplace",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+            )
+
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Surface(
+                    modifier = Modifier.size(40.dp),
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.primary
+                ) {
+                    Box(
+                        Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "${viewModel.user?.firstName?.firstOrNull() ?: ""}" +
+                                    "${viewModel.user?.lastName?.firstOrNull() ?: ""}",
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null
+                )
+            }
+        }
+
+        LazyVerticalGrid(
+            modifier = Modifier.weight(1f),
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            if (viewModel.isEmpty) {
+                item(span = {
+                    GridItemSpan(maxLineSpan)
+                }) {
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = "No products listed",
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+
+            items(sneakers) { sneaker ->
+                Card(
+                    colors = CardDefaults.cardColors(Color.Transparent),
+                    shape = RectangleShape
+                ) {
+                    Column {
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(
+                                text = "$${sneaker.price}",
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            Text(text = sneaker.name,
+                                fontWeight = FontWeight.Light,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis)
+                        }
+
+                        Text(
+                            text = "SKU: ${sneaker.sku}",
+                            color = AppColors.TextMuted,
+                            fontSize = 10.sp
+                        )
+                    }
+                }
+            }
+        }
     }
 }
