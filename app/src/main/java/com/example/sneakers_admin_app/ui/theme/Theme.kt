@@ -14,7 +14,8 @@ private val DarkColorScheme = darkColorScheme(
     surface = Gray700,
     onSurface = White,
     error = Red,
-    onError = White
+    onError = White,
+    outline = Gray300
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -26,6 +27,7 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Black,
     error = Red,
     onError = White,
+    outline = Gray300
 )
 
 object AppColors {

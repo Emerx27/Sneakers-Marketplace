@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -18,12 +18,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.sneakers_admin_app.core.navigation.Routes
 import com.example.sneakers_admin_app.shared.components.PrimaryButton
+import com.example.sneakers_admin_app.shared.components.PrimaryTextField
 import com.example.sneakers_admin_app.ui.theme.AppColors
 
 @Composable
@@ -61,62 +64,48 @@ fun RegisterScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(text = "Create an account", fontSize = 22.sp, fontWeight = FontWeight.Bold)
 
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+            PrimaryTextField(
                 value = viewModel.firstName,
                 onValueChange = { viewModel.onFirstNameChange(it) },
-                placeholder = { Text("First name", color = AppColors.TextMuted) },
+                placeholder = "First name",
                 isError = viewModel.firstNameError != null,
-                supportingText = viewModel.firstNameError?.let { error ->
-                    {
-                        Text(error, color = MaterialTheme.colorScheme.error)
-                    }
-                }
+                errorText = viewModel.firstNameError
             )
 
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+            PrimaryTextField(
                 value = viewModel.lastName,
-                onValueChange = viewModel::onLastNameChange,
-                placeholder = { Text("Last name", color = AppColors.TextMuted) },
+                onValueChange = { viewModel.onLastNameChange(it) },
+                placeholder = "Last name",
                 isError = viewModel.lastNameError != null,
-                supportingText = viewModel.lastNameError?.let { error ->
-                    {
-                        Text(error, color = MaterialTheme.colorScheme.error)
-                    }
-                }
+                errorText = viewModel.lastNameError
             )
 
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+            PrimaryTextField(
                 value = viewModel.email,
                 onValueChange = { viewModel.onEmailChange(it) },
-                placeholder = { Text("Email", color = AppColors.TextMuted) },
+                placeholder = "Email",
                 isError = viewModel.emailError != null,
-                supportingText = viewModel.emailError?.let { error ->
-                    {
-                        Text(error, color = MaterialTheme.colorScheme.error)
-                    }
-                }
+                errorText = viewModel.emailError,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email
+                )
             )
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                PrimaryTextField(
                     value = viewModel.password,
-                    onValueChange = viewModel::onPasswordChange,
-                    placeholder = { Text("Password", color = AppColors.TextMuted) },
+                    onValueChange = { viewModel.onPasswordChange(it) },
+                    placeholder = "Password",
                     isError = viewModel.passwordError != null,
-                    supportingText = viewModel.passwordError?.let { error ->
-                        {
-                            Text(error, color = MaterialTheme.colorScheme.error)
-                        }
-                    }
+                    errorText = viewModel.passwordError,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password
+                    ),
+                    visualTransformation = PasswordVisualTransformation()
                 )
 
                 Text(

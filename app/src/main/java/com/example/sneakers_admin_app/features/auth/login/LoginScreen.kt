@@ -7,21 +7,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.sneakers_admin_app.core.navigation.Routes
 import com.example.sneakers_admin_app.shared.components.PrimaryButton
-import com.example.sneakers_admin_app.ui.theme.AppColors
+import com.example.sneakers_admin_app.shared.components.PrimaryTextField
 
 @Composable
 fun LoginScreen(
@@ -51,30 +53,27 @@ fun LoginScreen(
         ) {
             Text("Log in", fontSize = 22.sp, fontWeight = FontWeight.Bold)
 
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+            PrimaryTextField(
                 value = viewModel.email,
                 onValueChange = { viewModel.onEmailChange(it) },
-                placeholder = { Text("Email", color = AppColors.TextMuted) },
+                placeholder = "Email",
                 isError = viewModel.emailError != null,
-                supportingText = viewModel.emailError?.let { error ->
-                    {
-                        Text(error, color = MaterialTheme.colorScheme.error)
-                    }
-                }
+                errorText = viewModel.emailError,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email
+                )
             )
 
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+            PrimaryTextField(
                 value = viewModel.password,
-                onValueChange = viewModel::onPasswordChange,
-                placeholder = { Text("Password", color = AppColors.TextMuted) },
+                onValueChange = { viewModel.onPasswordChange(it) },
+                placeholder = "Password",
                 isError = viewModel.passwordError != null,
-                supportingText = viewModel.passwordError?.let { error ->
-                    {
-                        Text(error, color = MaterialTheme.colorScheme.error)
-                    }
-                }
+                errorText = viewModel.passwordError,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             PrimaryButton(modifier = Modifier.fillMaxWidth(), text = "Log in", onClick = {viewModel.login()})
