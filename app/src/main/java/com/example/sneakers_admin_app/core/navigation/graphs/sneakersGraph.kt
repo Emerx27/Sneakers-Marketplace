@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.sneakers_admin_app.core.navigation.Routes
+import com.example.sneakers_admin_app.features.sneakers.presentation.screens.PublishSneakerScreen
 import com.example.sneakers_admin_app.features.sneakers.presentation.screens.SneakersScreen
 
 fun NavGraphBuilder.sneakersGraph(
@@ -12,6 +13,12 @@ fun NavGraphBuilder.sneakersGraph(
     composable(Routes.SNEAKERS) {
 
         SneakersScreen(
+            navController = navController
+        )
+    }
+
+    composable(Routes.PUBLISH) {
+        PublishSneakerScreen(
             navController = navController
         )
     }

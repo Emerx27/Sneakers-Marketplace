@@ -9,4 +9,5 @@ object Routes {
     const val SPLASH = "splash"
 
     const val SNEAKERS = "sneakers"
+    const val PUBLISH = "publish"
 }

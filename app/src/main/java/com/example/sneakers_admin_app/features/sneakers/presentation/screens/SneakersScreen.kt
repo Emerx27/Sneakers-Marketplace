@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -14,10 +15,12 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -37,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.sneakers_admin_app.core.navigation.Routes
 import com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel.SneakersViewModel
 import com.example.sneakers_admin_app.ui.theme.AppColors
 
@@ -85,7 +89,8 @@ fun SneakersScreen(
         Box(
             Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp)
+                .height(50.dp),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 modifier = Modifier.align(Alignment.Center),
@@ -133,7 +138,6 @@ fun SneakersScreen(
                 item(span = {
                     GridItemSpan(maxLineSpan)
                 }) {
-
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = "No products listed",
@@ -168,6 +172,25 @@ fun SneakersScreen(
                     }
                 }
             }
+        }
+
+        FloatingActionButton(
+            modifier = Modifier
+                .padding(bottom = 18.dp)
+                .align(Alignment.End),
+            onClick = {
+                navController.navigate(Routes.PUBLISH) {
+                    launchSingleTop = true
+                }
+            },
+            shape = CircleShape,
+            containerColor = MaterialTheme.colorScheme.primary
+        ) {
+
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Create sneaker"
+            )
         }
     }
 }
