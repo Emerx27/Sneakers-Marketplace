@@ -154,7 +154,7 @@ fun SneakersScreen(
                                 fontWeight = FontWeight.Bold
                             )
 
-                            Text(text = sneaker.name,
+                            Text(text = sneaker.model,
                                 fontWeight = FontWeight.Light,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis)
