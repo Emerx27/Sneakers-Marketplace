@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.products_admin"
+        applicationId = "com.example.sneakers_admin_app"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
