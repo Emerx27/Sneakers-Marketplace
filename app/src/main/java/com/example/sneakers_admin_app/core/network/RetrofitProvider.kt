@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.getValue
 
 object RetrofitProvider {
-    private const val BASE_URL = "http://192.168.1.152:3000/api/"
+    private const val BASE_URL = "http://192.168.1.155:3000/api/"
 
     private lateinit var appContext: Context
     fun init(context: Context) {
@@ -23,6 +23,9 @@ object RetrofitProvider {
         OkHttpClient.Builder()
             .addInterceptor(
                 AuthInterceptor(userPreferences)
+            )
+            .authenticator(
+                TokenAuthenticator(userPreferences)
             )
             .build()
     }

@@ -68,7 +68,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     val body = response.body()
 
                     if(body != null) {
-                        tokenManager.saveSession(token = body.token, user = body.user)
+                        tokenManager.saveSession(accessToken = body.accessToken, refreshToken = body.refreshToken, user = body.user)
 
                         isSuccess = true
                     }

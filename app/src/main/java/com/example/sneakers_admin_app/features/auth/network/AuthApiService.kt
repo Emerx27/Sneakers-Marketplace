@@ -1,5 +1,7 @@
 package com.example.sneakers_admin_app.features.auth.network
 
+import com.example.sneakers_admin_app.core.models.tokens.RefreshRequest
+import com.example.sneakers_admin_app.core.models.tokens.RefreshResponse
 import com.example.sneakers_admin_app.features.auth.models.login.LoginRequest
 import com.example.sneakers_admin_app.features.auth.models.login.LoginResponse
 import com.example.sneakers_admin_app.features.auth.models.register.RegisterRequest
@@ -18,4 +20,9 @@ interface AuthApiService {
     suspend fun login(
         @Body request: LoginRequest
     ) : Response<LoginResponse>
+
+    @POST("auth/refresh")
+    suspend fun refresh(
+        @Body request: RefreshRequest
+    ) : Response<RefreshResponse>
 }

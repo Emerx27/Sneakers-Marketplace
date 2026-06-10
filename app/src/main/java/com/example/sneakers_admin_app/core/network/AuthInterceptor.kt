@@ -16,25 +16,12 @@ class AuthInterceptor(private val userPreferences: UserPreferences) : Intercepto
 
         val request =
             chain.request()
-
-        val newRequest =
-            request.newBuilder()
-
-        newRequest.addHeader(
+            .newBuilder()
+            .addHeader(
             "Authorization",
-            "Bearer $token"
-        )
+            "Bearer $token")
+            .build()
 
-        val response = chain.proceed(
-            newRequest.build()
-        )
-
-        if(response.code == 401) {
-            runBlocking {
-                userPreferences.clearToken()
-            }
-        }
-
-        return response
+        return chain.proceed(request)
     }
 }

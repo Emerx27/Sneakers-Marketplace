@@ -15,32 +15,49 @@ class UserPreferences(
     private val context: Context
 ) {
     companion object {
-        private val TOKEN =
+        private val ACCESS_TOKEN =
             stringPreferencesKey("jwt_token")
+        private val REFRESH_TOKEN =
+            stringPreferencesKey("refresh_token")
         private val USER =
             stringPreferencesKey("user")
     }
 
     suspend fun saveSession(
-        token: String,
+        accessToken: String,
+        refreshToken: String,
         user: User
     ) {
         val userJson =
             Gson().toJson(user)
 
         context.dataStore.edit {
-
-            it[TOKEN] = token
+            it[ACCESS_TOKEN] = accessToken
+            it[REFRESH_TOKEN] = refreshToken
             it[USER] = userJson
         }
     }
     suspend fun getToken() : String? {
-        return context.dataStore.data.first()[TOKEN]
+        return context.dataStore.data.first()[ACCESS_TOKEN]
     }
 
-    suspend fun clearToken() {
+    suspend fun getRefreshToken(): String? {
+        return context.dataStore.data.first()[REFRESH_TOKEN]
+    }
+
+    suspend fun updateToken(
+        token: String
+    ) {
         context.dataStore.edit {
-            it.remove(TOKEN)
+            it[ACCESS_TOKEN] = token
+        }
+    }
+
+    suspend fun clearSession() {
+        context.dataStore.edit {
+            it.remove(ACCESS_TOKEN)
+            it.remove(REFRESH_TOKEN)
+            it.remove(USER)
         }
     }
 
