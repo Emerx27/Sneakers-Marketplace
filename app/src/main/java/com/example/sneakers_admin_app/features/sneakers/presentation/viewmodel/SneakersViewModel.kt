@@ -35,9 +35,6 @@ class SneakersViewModel(application: Application) : AndroidViewModel(application
     var isLoading by mutableStateOf(false)
         private set
 
-    var isEmpty by mutableStateOf(false)
-        private set
-
     var errorMessage by mutableStateOf<String?>(null)
         private set
 
@@ -55,10 +52,6 @@ class SneakersViewModel(application: Application) : AndroidViewModel(application
                     response.body()?.let { sneakers ->
                         _sneakersPreviewList.value =
                             sneakers
-
-                        if(sneakers.isEmpty()) {
-                            isEmpty = true
-                        }
                     }
                 } else {
                     val gson = Gson()

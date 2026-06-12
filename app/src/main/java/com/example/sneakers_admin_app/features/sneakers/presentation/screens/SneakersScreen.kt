@@ -133,7 +133,7 @@ fun SneakersScreen(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                if (viewModel.isEmpty) {
+                if (sneakers.isEmpty()) {
                     item(span = {
                         GridItemSpan(maxLineSpan)
                     }) {
