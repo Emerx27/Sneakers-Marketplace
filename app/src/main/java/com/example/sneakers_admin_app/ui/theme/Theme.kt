@@ -27,13 +27,13 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Black,
     error = Red,
     onError = White,
-    outline = Gray300
+    outline = Gray400
 )
 
 object AppColors {
     val Success = Green
     val Warning = Orange
-    val TextMuted = Gray300
+    val TextMuted = Gray400
 }
 
 @Composable
