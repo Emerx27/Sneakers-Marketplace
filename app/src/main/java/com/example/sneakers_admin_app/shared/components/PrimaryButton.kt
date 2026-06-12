@@ -15,9 +15,15 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,
     containerColor: Color = MaterialTheme.colorScheme.primary,
+    shape: Int = 4,
     onClick: () -> Unit
 ) {
-    Button(modifier = modifier, colors = ButtonDefaults.buttonColors(containerColor = containerColor), onClick = onClick, shape = RoundedCornerShape(4.dp)) {
+    Button(
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(containerColor = containerColor),
+        onClick = onClick,
+        shape = RoundedCornerShape(shape.dp)
+    ) {
         Text(text)
     }
 }

@@ -72,7 +72,7 @@ class SneakersViewModel(application: Application) : AndroidViewModel(application
                     errorMessage = errorResponse.error
                 }
             } catch(_: Exception) {
-                errorMessage = "Unknown error"
+                errorMessage = "Error connecting to the server"
             } finally {
                 isLoading = false
             }

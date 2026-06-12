@@ -145,6 +145,10 @@ class PublishSneakerViewModel : ViewModel() {
         return true
     }
 
+    fun clearErrorMessage() {
+        generalError = null
+    }
+
     fun publishSneaker() {
         if (isLoading) return
 

@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.sneakers_admin_app.features.sneakers.models.SneakerCondition
 import com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel.PublishSneakerViewModel
+import com.example.sneakers_admin_app.shared.components.ErrorModalScreen
 import com.example.sneakers_admin_app.shared.components.PrimaryTextField
 import com.example.sneakers_admin_app.shared.components.SelectorField
 import com.example.sneakers_admin_app.ui.theme.AppColors
@@ -223,7 +224,9 @@ fun PublishSneakerScreen(
             }
 
             viewModel.generalError?.let {
-                Text(text = it)
+                ErrorModalScreen(message = it, actionText = "Dismiss", onDismiss = {
+                    viewModel.clearErrorMessage()
+                }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          )
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.sneakers_admin_app.features.sneakers.presentation.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.sneakers_admin_app.core.navigation.Routes
 import com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel.SneakersViewModel
+import com.example.sneakers_admin_app.shared.components.ErrorModalScreen
 import com.example.sneakers_admin_app.ui.theme.AppColors
 
 @Composable
@@ -57,15 +59,9 @@ fun SneakersScreen(
     }
 
     viewModel.errorMessage?.let {
-        Box(
-            Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                color = MaterialTheme.colorScheme.error,
-                text = viewModel.errorMessage!!
-            )
-        }
+        ErrorModalScreen(message = it, actionText = "Retry", onDismiss = {
+            viewModel.getAllSneakers()
+        })
         return
     }
 
@@ -82,115 +78,119 @@ fun SneakersScreen(
         return
     }
 
-    Column(
-        modifier = Modifier.padding(horizontal = 18.dp),
-        verticalArrangement = Arrangement.spacedBy(18.dp)
+    Box(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            contentAlignment = Alignment.Center
+        Column(
+            modifier = Modifier.padding(horizontal = 18.dp),
+            verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
-            Text(
-                modifier = Modifier.align(Alignment.Center),
-                text = "Marketplace",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-            )
-
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Surface(
-                    modifier = Modifier.size(40.dp),
-                    shape = CircleShape,
-                    color = MaterialTheme.colorScheme.primary
-                ) {
-                    Box(
-                        Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "${viewModel.user?.firstName?.firstOrNull() ?: ""}" +
-                                    "${viewModel.user?.lastName?.firstOrNull() ?: ""}",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null
+                Text(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = "Marketplace",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
                 )
-            }
-        }
 
-        LazyVerticalGrid(
-            modifier = Modifier.weight(1f),
-            columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            if (viewModel.isEmpty) {
-                item(span = {
-                    GridItemSpan(maxLineSpan)
-                }) {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = "No products listed",
-                        textAlign = TextAlign.Center
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Surface(
+                        modifier = Modifier.size(40.dp),
+                        shape = CircleShape,
+                        color = MaterialTheme.colorScheme.primary
+                    ) {
+                        Box(
+                            Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "${viewModel.user?.firstName?.firstOrNull() ?: ""}" +
+                                        "${viewModel.user?.lastName?.firstOrNull() ?: ""}",
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = null
                     )
                 }
             }
 
-            items(sneakers) { sneaker ->
-                Card(
-                    colors = CardDefaults.cardColors(Color.Transparent),
-                    shape = RectangleShape
-                ) {
-                    Column {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text(
-                                text = "$${sneaker.price}",
-                                fontWeight = FontWeight.Bold
-                            )
-
-                            Text(text = sneaker.model,
-                                fontWeight = FontWeight.Light,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis)
-                        }
-
+            LazyVerticalGrid(
+                modifier = Modifier.weight(1f),
+                columns = GridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                if (viewModel.isEmpty) {
+                    item(span = {
+                        GridItemSpan(maxLineSpan)
+                    }) {
                         Text(
-                            text = "SKU: ${sneaker.sku}",
-                            color = AppColors.TextMuted,
-                            fontSize = 10.sp
+                            modifier = Modifier.fillMaxWidth(),
+                            text = "No products listed",
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
-            }
-        }
 
-        FloatingActionButton(
-            modifier = Modifier
-                .padding(bottom = 18.dp)
-                .align(Alignment.End),
-            onClick = {
-                navController.navigate(Routes.PUBLISH) {
-                    launchSingleTop = true
+                items(sneakers) { sneaker ->
+                    Card(
+                        colors = CardDefaults.cardColors(Color.Transparent),
+                        shape = RectangleShape
+                    ) {
+                        Column {
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Text(
+                                    text = "$${sneaker.price}",
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Text(text = sneaker.model,
+                                    fontWeight = FontWeight.Light,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis)
+                            }
+
+                            Text(
+                                text = "SKU: ${sneaker.sku}",
+                                color = AppColors.TextMuted,
+                                fontSize = 10.sp
+                            )
+                        }
+                    }
                 }
-            },
-            shape = CircleShape,
-            containerColor = MaterialTheme.colorScheme.primary
-        ) {
+            }
 
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Create sneaker"
-            )
+            FloatingActionButton(
+                modifier = Modifier
+                    .padding(bottom = 18.dp)
+                    .align(Alignment.End),
+                onClick = {
+                    navController.navigate(Routes.PUBLISH) {
+                        launchSingleTop = true
+                    }
+                },
+                shape = CircleShape,
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Create sneaker"
+                )
+            }
         }
     }
 }
