@@ -3,6 +3,7 @@ package com.example.sneakers_admin_app.core.network
 import android.content.Context
 import com.example.sneakers_admin_app.core.storage.UserPreferences
 import com.example.sneakers_admin_app.features.auth.network.AuthApiService
+import com.example.sneakers_admin_app.features.profile.network.ProfileApiService
 import com.example.sneakers_admin_app.features.sneakers.network.SneakersApiService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -43,5 +44,9 @@ object RetrofitProvider {
 
     val sneakersApi: SneakersApiService by lazy {
         retrofit.create(SneakersApiService::class.java)
+    }
+
+    val profileApi: ProfileApiService by lazy {
+        retrofit.create(ProfileApiService::class.java)
     }
 }

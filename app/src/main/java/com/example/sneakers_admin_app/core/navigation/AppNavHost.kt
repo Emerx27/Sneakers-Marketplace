@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sneakers_admin_app.core.navigation.graphs.authGraph
+import com.example.sneakers_admin_app.core.navigation.graphs.profileGraph
 import com.example.sneakers_admin_app.core.navigation.graphs.sneakersGraph
 import com.example.sneakers_admin_app.features.splash.SplashScreen
 
@@ -28,5 +29,7 @@ fun AppNavHost(paddingValues: PaddingValues) {
         authGraph(navController)
 
         sneakersGraph(navController)
+
+        profileGraph(navController)
     }
 }
