@@ -10,10 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
@@ -34,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.sneakers_admin_app.features.sneakers.models.SneakerCondition
 import com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel.PublishSneakerViewModel
+import com.example.sneakers_admin_app.shared.components.BackButton
 import com.example.sneakers_admin_app.shared.components.ErrorModalScreen
 import com.example.sneakers_admin_app.shared.components.PrimaryTextField
 import com.example.sneakers_admin_app.shared.components.SelectorField
@@ -52,10 +50,6 @@ fun PublishSneakerScreen(
     }
 
     var showConditionSheet by remember {
-        mutableStateOf(false)
-    }
-
-    var isNavigating by remember {
         mutableStateOf(false)
     }
 
@@ -87,16 +81,7 @@ fun PublishSneakerScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        modifier = Modifier.clickable {
-                            if (isNavigating) return@clickable
-
-                            isNavigating = true
-                            navController.popBackStack()
-                        },
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = null,
-                    )
+                    BackButton { navController.popBackStack() }
 
                     Text(
                         text = "Publish sneaker",
