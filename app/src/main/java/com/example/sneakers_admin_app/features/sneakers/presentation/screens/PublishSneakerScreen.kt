@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,10 +29,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.sneakers_admin_app.features.sneakers.models.SneakerCondition
 import com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel.PublishSneakerViewModel
-import com.example.sneakers_admin_app.shared.components.BackButton
 import com.example.sneakers_admin_app.shared.components.ErrorModalScreen
 import com.example.sneakers_admin_app.shared.components.PrimaryTextField
 import com.example.sneakers_admin_app.shared.components.SelectorField
+import com.example.sneakers_admin_app.shared.components.layout.ScreenHeader
 import com.example.sneakers_admin_app.ui.theme.AppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,37 +68,21 @@ fun PublishSneakerScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    BackButton { navController.popBackStack() }
-
+            ScreenHeader(
+                title = "Publish sneaker",
+                onBackClick = {navController.popBackStack()},
+                actions = {
                     Text(
-                        text = "Publish sneaker",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold
+                        modifier = Modifier.clickable(
+                            enabled = !viewModel.isLoading
+                        ) {
+                            viewModel.publishSneaker()
+                        },
+                        text = "Publish",
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
-
-                Text(
-                    modifier = Modifier.clickable(
-                        enabled = !viewModel.isLoading
-                    ) {
-                        viewModel.publishSneaker()
-                    },
-                    text = "Publish",
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
+            )
             PrimaryTextField(
                 value = viewModel.brand,
                 onValueChange = viewModel::onBrandChange,

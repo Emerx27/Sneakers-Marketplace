@@ -31,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.sneakers_admin_app.features.profile.presentation.viewmodel.ProfileViewModel
 import com.example.sneakers_admin_app.shared.components.BackButton
+import com.example.sneakers_admin_app.shared.components.layout.ScreenHeader
 import com.example.sneakers_admin_app.ui.theme.AppColors
 
 @Composable
@@ -54,14 +55,10 @@ fun ProfileScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .height(50.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                BackButton { navController.popBackStack() }
-            }
+            ScreenHeader(
+                title = "Profile",
+                onBackClick = {navController.popBackStack()}
+            )
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
