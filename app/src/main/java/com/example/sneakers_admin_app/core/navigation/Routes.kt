@@ -10,5 +10,8 @@ object Routes {
 
     const val SNEAKERS = "sneakers"
     const val PUBLISH = "publish"
+
+    const val SNEAKER_DETAIL = "sneaker_detail"
     const val PROFILE = "profile"
+
 }

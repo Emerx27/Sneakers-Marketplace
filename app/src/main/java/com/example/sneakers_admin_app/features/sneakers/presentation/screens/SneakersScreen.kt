@@ -151,7 +151,13 @@ fun SneakersScreen(
                 }
 
                 items(sneakers) { sneaker ->
-                    Card(
+                    Card(modifier = Modifier.clickable {
+                        navController.navigate(
+                            "${Routes.SNEAKER_DETAIL}/${sneaker.id}"
+                        ) {
+                            launchSingleTop = true
+                        }
+                    },
                         colors = CardDefaults.cardColors(Color.Transparent),
                         shape = RectangleShape
                     ) {
