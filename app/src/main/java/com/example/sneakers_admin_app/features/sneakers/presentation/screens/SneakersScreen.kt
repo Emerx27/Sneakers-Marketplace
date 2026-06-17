@@ -193,25 +193,24 @@ fun SneakersScreen(
                     }
                 }
             }
+        }
+        FloatingActionButton(
+            modifier = Modifier
+                .padding(18.dp)
+                .align(Alignment.BottomEnd),
+            onClick = {
+                navController.navigate(Routes.PUBLISH) {
+                    launchSingleTop = true
+                }
+            },
+            shape = CircleShape,
+            containerColor = MaterialTheme.colorScheme.primary
+        ) {
 
-            FloatingActionButton(
-                modifier = Modifier
-                    .padding(bottom = 18.dp)
-                    .align(Alignment.End),
-                onClick = {
-                    navController.navigate(Routes.PUBLISH) {
-                        launchSingleTop = true
-                    }
-                },
-                shape = CircleShape,
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Create sneaker"
-                )
-            }
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Create sneaker"
+            )
         }
     }
 }
