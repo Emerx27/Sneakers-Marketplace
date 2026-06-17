@@ -5,5 +5,6 @@ data class SneakerPreview(
     val brand: String,
     val model: String,
     val price: String,
-    val sku: String
+    val sku: String,
+    val thumbnail: String
 )

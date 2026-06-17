@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.sneakers_admin_app.core.navigation.Routes
 import com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel.SneakersViewModel
 import com.example.sneakers_admin_app.shared.components.ErrorModalScreen
@@ -162,6 +164,14 @@ fun SneakersScreen(
                         shape = RectangleShape
                     ) {
                         Column {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(180.dp),
+                                model = sneaker.thumbnail,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 Text(
                                     text = "$${sneaker.price}",
