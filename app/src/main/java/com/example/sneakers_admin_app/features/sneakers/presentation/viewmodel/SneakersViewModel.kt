@@ -38,10 +38,15 @@ class SneakersViewModel(application: Application) : AndroidViewModel(application
     var errorMessage by mutableStateOf<String?>(null)
         private set
 
+    var hasLoaded = false
     fun getAllSneakers() {
+        if(hasLoaded) return
+
         viewModelScope.launch {
             errorMessage = null
             isLoading = true
+            hasLoaded = true
+
             try {
 
                 val response = RetrofitProvider
@@ -65,6 +70,7 @@ class SneakersViewModel(application: Application) : AndroidViewModel(application
                     errorMessage = errorResponse.error
                 }
             } catch(_: Exception) {
+                hasLoaded = false
                 errorMessage = "Error connecting to the server"
             } finally {
                 isLoading = false
