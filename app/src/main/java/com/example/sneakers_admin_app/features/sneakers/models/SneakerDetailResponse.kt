@@ -8,5 +8,6 @@ data class SneakerDetailResponse(
     val price: Double,
     val description: String?,
     val firstName: String,
-    val lastName: String
+    val lastName: String,
+    val thumbnail: String
 )

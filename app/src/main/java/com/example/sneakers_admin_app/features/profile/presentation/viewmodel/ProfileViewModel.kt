@@ -10,7 +10,7 @@ import com.example.sneakers_admin_app.core.models.User
 import com.example.sneakers_admin_app.core.models.errors.MessageErrorResponse
 import com.example.sneakers_admin_app.core.network.RetrofitProvider
 import com.example.sneakers_admin_app.core.storage.UserPreferences
-import com.example.sneakers_admin_app.features.sneakers.models.SneakerPreview
+import com.example.sneakers_admin_app.features.profile.models.ProfileSneakerItem
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,7 +29,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    private val _activeSneakersList = MutableStateFlow<List<SneakerPreview>>(emptyList())
+    private val _activeSneakersList = MutableStateFlow<List<ProfileSneakerItem>>(emptyList())
 
     val activeSneakerList = _activeSneakersList.asStateFlow()
 
