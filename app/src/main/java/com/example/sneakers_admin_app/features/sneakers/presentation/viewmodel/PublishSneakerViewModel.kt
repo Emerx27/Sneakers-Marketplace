@@ -1,5 +1,6 @@
 package com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,6 +15,9 @@ import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 class PublishSneakerViewModel : ViewModel() {
+    var selectedImages by mutableStateOf<List<Uri>>(emptyList())
+        private set
+
     var brand by mutableStateOf("")
         private set
 
@@ -147,6 +151,20 @@ class PublishSneakerViewModel : ViewModel() {
 
     fun clearErrorMessage() {
         generalError = null
+    }
+
+    fun addImages(images: List<Uri>) {
+        selectedImages =
+            (selectedImages + images)
+                .distinct()
+                .take(4)
+    }
+
+    fun removeImage(uri: Uri) {
+        selectedImages =
+            selectedImages.filterNot {
+                it == uri
+            }
     }
 
     fun publishSneaker() {
