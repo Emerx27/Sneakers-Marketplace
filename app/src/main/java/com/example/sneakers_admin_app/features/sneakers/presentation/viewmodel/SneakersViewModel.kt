@@ -45,7 +45,7 @@ class SneakersViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             errorMessage = null
             isLoading = true
-            hasLoaded = true
+            hasLoaded = false
 
             try {
 

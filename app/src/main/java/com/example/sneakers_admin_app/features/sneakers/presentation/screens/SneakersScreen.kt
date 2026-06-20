@@ -152,7 +152,9 @@ fun SneakersScreen(
                     }
                 }
 
-                items(sneakers) { sneaker ->
+                items(
+                    items = sneakers,
+                    key = { it.id }) { sneaker ->
                     Card(modifier = Modifier.clickable {
                         navController.navigate(
                             "${Routes.SNEAKER_DETAIL}/${sneaker.id}"
@@ -165,12 +167,12 @@ fun SneakersScreen(
                     ) {
                         Column {
                             AsyncImage(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(180.dp),
                                 model = sneaker.thumbnail,
                                 contentDescription = null,
-                                contentScale = ContentScale.Crop
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(180.dp)
                             )
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 Text(

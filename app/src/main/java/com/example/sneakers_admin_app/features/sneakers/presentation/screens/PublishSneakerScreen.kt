@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -85,6 +86,8 @@ fun PublishSneakerScreen(
             }
         }
 
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -104,7 +107,7 @@ fun PublishSneakerScreen(
                         modifier = Modifier.clickable(
                             enabled = !viewModel.isLoading
                         ) {
-                            viewModel.publishSneaker()
+                            viewModel.publishSneaker(context)
                         },
                         text = "Publish",
                         color = MaterialTheme.colorScheme.primary
@@ -138,6 +141,8 @@ fun PublishSneakerScreen(
 
                     Text("Add photos", fontSize = 12.sp)
                 }
+
+                viewModel.selectedImagesError?.let { Text(it, color = MaterialTheme.colorScheme.error, fontSize = 12.sp) }
             } else {
                 LazyRow(
                     modifier = Modifier.height(100.dp),

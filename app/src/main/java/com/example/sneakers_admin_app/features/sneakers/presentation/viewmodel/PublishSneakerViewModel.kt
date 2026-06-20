@@ -1,5 +1,6 @@
 package com.example.sneakers_admin_app.features.sneakers.presentation.viewmodel
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -11,6 +12,8 @@ import com.example.sneakers_admin_app.core.models.errors.MessageErrorResponse
 import com.example.sneakers_admin_app.core.models.errors.ValidationErrorResponse
 import com.example.sneakers_admin_app.core.network.RetrofitProvider
 import com.example.sneakers_admin_app.features.sneakers.models.publish.PublishSneakerRequest
+import com.example.sneakers_admin_app.shared.extensions.toMultipartPart
+import com.example.sneakers_admin_app.shared.extensions.toPart
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
@@ -35,6 +38,9 @@ class PublishSneakerViewModel : ViewModel() {
 
     var sku by mutableStateOf("")
         private set
+
+    var selectedImagesError by mutableStateOf<String?>(null)
+    private set
 
     var brandError by mutableStateOf<String?>(null)
         private set
@@ -93,6 +99,7 @@ class PublishSneakerViewModel : ViewModel() {
     }
 
     fun clearErrors() {
+        selectedImagesError = null
         brandError = null
         modelError = null
         descriptionError = null
@@ -104,6 +111,11 @@ class PublishSneakerViewModel : ViewModel() {
 
     private fun validateForm(): Boolean {
         var hasErrors = false
+
+        if(selectedImages.isEmpty()) {
+            selectedImagesError = "At least one image is required"
+            hasErrors = true
+        }
 
         if (brand.isBlank()) {
             brandError = "Sneaker brand is required"
@@ -167,7 +179,7 @@ class PublishSneakerViewModel : ViewModel() {
             }
     }
 
-    fun publishSneaker() {
+    fun publishSneaker(context: Context) {
         if (isLoading) return
 
         isLoading = true
@@ -183,21 +195,32 @@ class PublishSneakerViewModel : ViewModel() {
 
         val parsedPrice = price.toDouble()
 
+        val imageParts =
+            selectedImages.map {
+                it.toMultipartPart(context)
+            }
+
         viewModelScope.launch {
             try {
                 val response =
                     RetrofitProvider
                         .sneakersApi
                         .publishSneaker(
-                            PublishSneakerRequest(
-                                brand = brand,
-                                model = model,
-                                sku = sku,
-                                price = parsedPrice,
-                                condition = condition,
-                                description = description.ifBlank { null }
-                            )
-                        )
+
+                        brand = brand.toPart(),
+
+                        model = model.toPart(),
+
+                        sku = sku.toPart(),
+
+                        price = parsedPrice.toString().toPart(),
+
+                        condition = condition.toPart(),
+
+                        description = description.toPart(),
+
+                        images = imageParts
+                    )
 
                 if (response.isSuccessful) {
                     val body = response.body()
